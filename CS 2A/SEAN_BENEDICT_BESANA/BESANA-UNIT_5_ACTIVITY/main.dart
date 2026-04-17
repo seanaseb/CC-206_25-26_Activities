@@ -37,7 +37,7 @@ class Pet extends Animal {
 
   // CONCEPT: Named constructor with nickname
   Pet(String name, String kingdom, String dob, int numlegs, this.nickname)
-      : super(name, kingdom, dob, numlegs) {
+    : super(name, kingdom, dob, numlegs) {
     if (nickname != null) {
       _kindness = 10;
     }
@@ -45,21 +45,15 @@ class Pet extends Animal {
 
   // CONCEPT: Named constructor without nickname
   Pet.withoutNickname(String name, String kingdom, String dob, int numlegs)
-      : super(name, kingdom, dob, numlegs);
+    : super(name, kingdom, dob, numlegs);
 
   @override
-  String displayInfo() => '''
-Name: $name
-Nickname: ${nickname ?? 'None'}
-Kingdom: $kingdom
-DOB: $dob
-Legs: $numlegs
-''';
+  String displayInfo() => 'Name: $name, Nickname: ${nickname ?? 'None'}, Kingdom: $kingdom, DOB: $dob, Legs: $numlegs';
 
   // CONCEPT: Method: Kick decreases kindness
   void kick() {
     _kindness -= 5;
-    print('Kicked $displayName, kindness decreased to $_kindness');
+    print('  Kicked $displayName, kindness decreased to $_kindness');
   }
 
   String get displayName => nickname != null ? '$name ($nickname)' : name;
@@ -67,17 +61,17 @@ Legs: $numlegs
   // CONCEPT: Method: Pet increases kindness unless kindness is below 0
   void pet() {
     if (_kindness < 0) {
-      print('Failed to pet $displayName, kindness is $_kindness');
+      print('  Failed to pet $displayName, kindness is $_kindness');
     } else {
       _kindness += 10;
-      print('Petted $displayName, kindness increased to $_kindness');
+      print('  Petted $displayName, kindness increased to $_kindness');
     }
   }
 
   // CONCEPT: Method: Feed increases kindness by a larger amount
   void feed() {
     _kindness += 500;
-    print('Fed $displayName, kindness increased to $_kindness');
+    print('  Fed $displayName, kindness increased to $_kindness');
   }
 }
 
@@ -95,7 +89,8 @@ void main() {
   // CONCEPT: Looping through ZOO and calling functions
   print('=== ZOO ANIMALS ===');
   for (var animal in zoo) {
-    print('---');
+    print('----------');
+    print('${animal.name}');
     animal.walk('north');
     print(animal.displayInfo());
   }
@@ -111,14 +106,17 @@ void main() {
   print('--- Pet 1 actions ---');
   petHome[0].kick();
   petHome[0].kick();
+  print('');
 
   print('--- Pet 2 actions ---');
   petHome[1].feed();
   petHome[1].feed();
   petHome[1].feed();
+  print('');
 
   print('--- Pet 3 actions ---');
   petHome[2].feed();
   petHome[2].feed();
   petHome[2].feed();
+  print('');
 }
