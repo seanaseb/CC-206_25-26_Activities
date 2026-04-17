@@ -19,7 +19,12 @@ class Animal {
   }
 
   // CONCEPT: Method: displayInfo returns a summary string
-  String displayInfo() => 'Name: $name, Kingdom: $kingdom, DOB: $dob, Legs: $numlegs';
+  String displayInfo() => '''
+Name: $name
+Kingdom: $kingdom
+DOB: $dob
+Legs: $numlegs
+''';
 }
 
 // CONCEPT: Constructing Classes
@@ -42,26 +47,37 @@ class Pet extends Animal {
   Pet.withoutNickname(String name, String kingdom, String dob, int numlegs)
       : super(name, kingdom, dob, numlegs);
 
+  @override
+  String displayInfo() => '''
+Name: $name
+Nickname: ${nickname ?? 'None'}
+Kingdom: $kingdom
+DOB: $dob
+Legs: $numlegs
+''';
+
   // CONCEPT: Method: Kick decreases kindness
   void kick() {
     _kindness -= 5;
-    print('$name\'s kindness decreased to $_kindness');
+    print('Kicked $displayName, kindness decreased to $_kindness');
   }
+
+  String get displayName => nickname != null ? '$name ($nickname)' : name;
 
   // CONCEPT: Method: Pet increases kindness unless kindness is below 0
   void pet() {
     if (_kindness < 0) {
-      print('Failed to pet $name, kindness is $_kindness');
+      print('Failed to pet $displayName, kindness is $_kindness');
     } else {
       _kindness += 10;
-      print('Petted $name, kindness increased to $_kindness');
+      print('Petted $displayName, kindness increased to $_kindness');
     }
   }
 
   // CONCEPT: Method: Feed increases kindness by a larger amount
   void feed() {
     _kindness += 500;
-    print('Fed $name, kindness increased to $_kindness');
+    print('Fed $displayName, kindness increased to $_kindness');
   }
 }
 
@@ -77,7 +93,9 @@ void main() {
   ];
 
   // CONCEPT: Looping through ZOO and calling functions
+  print('=== ZOO ANIMALS ===');
   for (var animal in zoo) {
+    print('---');
     animal.walk('north');
     print(animal.displayInfo());
   }
@@ -89,15 +107,17 @@ void main() {
     Pet('Bird', 'Bird', '2023-11-05', 2, 'Tweety'),
   ];
 
-  // CONCEPT: Decrease kindness below 0 for one pet
+  print('\n=== PET HOME ===');
+  print('--- Pet 1 actions ---');
   petHome[0].kick();
   petHome[0].kick();
 
-  // CONCEPT: Increase kindness above 1000 for other pets
+  print('--- Pet 2 actions ---');
   petHome[1].feed();
   petHome[1].feed();
   petHome[1].feed();
 
+  print('--- Pet 3 actions ---');
   petHome[2].feed();
   petHome[2].feed();
   petHome[2].feed();
